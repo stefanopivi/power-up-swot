@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Power Up – La mia SWOT personale</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;700;800&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F2F4FB; --surface: #FFFFFF;
+    --ink: #161A3C; --ink-soft: #4B5078; --line: #D6DAEE;
+    --brand: #5B3DF5; --brand-dark: #4429D1; --spark: #FFC933;
+    --s: #0F6B3C; --s-bg: #E4F6EC; --s-line: #9FD8B8;
+    --w: #B0283A; --w-bg: #FCE9EB; --w-line: #F0A9B1;
+    --o: #4429D1; --o-bg: #EEEAFF; --o-line: #BFB2FA;
+    --t: #8A5A00; --t-bg: #FFF2D1; --t-line: #EBC96B;
+    --display: "Sora", "Trebuchet MS", "Segoe UI", sans-serif;
+    --text: "Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--text); font-size: 18px; line-height: 1.5; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 20px 18px 64px; }
+
+  .brand { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-weight: 800; font-size: 22px; letter-spacing: -0.01em; margin-bottom: 22px; }
+  .brand svg { width: 30px; height: 30px; flex: none; }
+  .brand small { font-family: var(--text); font-weight: 600; font-size: 15px; color: var(--ink-soft); margin-left: auto; }
+
+  h1 { font-family: var(--display); font-weight: 800; font-size: 34px; line-height: 1.2; letter-spacing: -0.02em; margin: 0 0 12px; }
+  .intro { max-width: 680px; margin: 0 0 8px; }
+  .privacy { color: var(--ink-soft); font-size: 16px; margin: 0 0 22px; max-width: 680px; }
+
+  .name-row { display: flex; align-items: center; gap: 12px; margin: 0 0 26px; flex-wrap: wrap; }
+  .name-row label { font-weight: 600; }
+  .name-row input { font: inherit; padding: 10px 14px; border: 2px solid var(--line); border-radius: 12px; min-width: 240px; background: var(--surface); color: var(--ink); }
+
+  .band { font-family: var(--display); font-weight: 700; font-size: 17px; color: var(--ink-soft); margin: 26px 0 10px; display: flex; align-items: center; gap: 12px; }
+  .band::after { content: ""; flex: 1; height: 2px; background: var(--line); }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  .quad { border-radius: 18px; border: 2px solid; padding: 16px 16px 18px; background: var(--surface); }
+  .quad.s { border-color: var(--s-line); } .quad.w { border-color: var(--w-line); }
+  .quad.o { border-color: var(--o-line); } .quad.t { border-color: var(--t-line); }
+  .quad header { margin: -16px -16px 14px; padding: 12px 16px; border-radius: 16px 16px 0 0; }
+  .quad.s header { background: var(--s-bg); color: var(--s); } .quad.w header { background: var(--w-bg); color: var(--w); }
+  .quad.o header { background: var(--o-bg); color: var(--o); } .quad.t header { background: var(--t-bg); color: var(--t); }
+  .quad h2 { font-family: var(--display); font-size: 20px; font-weight: 800; letter-spacing: -0.01em; margin: 0; line-height: 1.25; }
+  .quad h2 span { display: block; font-family: var(--text); font-weight: 600; font-size: 16px; }
+  .quad h2 em { font-style: italic; }
+
+  details { margin: 0 0 12px; font-size: 16px; color: var(--ink-soft); }
+  summary { cursor: pointer; font-weight: 600; color: var(--ink); padding: 2px 0; }
+  details ul { margin: 6px 0 0; padding-left: 20px; }
+
+  .items { display: grid; gap: 8px; margin: 0 0 12px; padding: 0; list-style: none; }
+  .items textarea {
+    display: block; width: 100%; resize: none; overflow: hidden;
+    font: inherit; color: var(--ink); line-height: 1.4;
+    border: 2px solid var(--line); border-radius: 10px; padding: 9px 12px; background: #FBFBFE;
+  }
+  .items textarea:focus { background: #fff; border-color: var(--brand); }
+  .add { font: inherit; font-weight: 600; color: var(--brand-dark); background: transparent; border: 2px dashed var(--line); border-radius: 10px; padding: 8px 14px; cursor: pointer; width: 100%; }
+  .add:hover { border-color: var(--brand); background: #F7F5FF; }
+  :focus-visible { outline: 3px solid var(--spark); outline-offset: 2px; }
+
+  .actions { margin-top: 34px; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 22px 22px 20px; }
+  .actions h2 { font-family: var(--display); font-size: 22px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  .actions p { margin: 0 0 16px; color: var(--ink-soft); }
+  .btns { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn { font-family: var(--display); font-weight: 700; font-size: 16px; background: var(--brand); color: #fff; border: 0; border-radius: 12px; padding: 13px 22px; cursor: pointer; box-shadow: 0 4px 0 var(--brand-dark); }
+  .btn:hover { background: #6A4EFF; }
+  .btn:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--brand-dark); }
+  .btn.ghost { background: transparent; color: var(--brand-dark); box-shadow: inset 0 0 0 2px var(--brand); }
+  .btn.ghost:active { transform: none; }
+  .reset { margin-top: 18px; }
+  .linkbtn { font: inherit; font-size: 15px; color: var(--ink-soft); background: none; border: 0; text-decoration: underline; cursor: pointer; padding: 4px 0; }
+
+  .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--ink); color: #fff; padding: 12px 20px; border-radius: 12px; font-size: 16px; opacity: 0; pointer-events: none; transition: opacity .2s; max-width: 90vw; text-align: center; }
+  .toast.show { opacity: 1; }
+
+  #print-view { display: none; }
+
+  @media (max-width: 700px) {
+    h1 { font-size: 28px; }
+    .row { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media print {
+    @page { size: A4 portrait; margin: 14mm; }
+    body { background: #fff; font-size: 12pt; }
+    .wrap { display: none; }
+    .toast { display: none; }
+    #print-view { display: block; font-family: Arial, Helvetica, sans-serif; color: #000; }
+    #print-view h1 { font-size: 22pt; margin: 0 0 2mm; }
+    #print-view .who { font-size: 13pt; margin: 0 0 6mm; color: #333; }
+    #print-view .pband { font-weight: bold; font-size: 11pt; color: #444; margin: 6mm 0 2mm; border-bottom: 1.5pt solid #bbb; padding-bottom: 1mm; }
+    #print-view .prow { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; }
+    #print-view .pq { border: 1.5pt solid #888; border-radius: 3mm; min-height: 62mm; break-inside: avoid; }
+    #print-view .pq h2 { margin: 0; padding: 2.5mm 3.5mm; font-size: 12.5pt; border-bottom: 1.5pt solid #888; background: #eee; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    #print-view .pq h2 span { font-weight: normal; font-size: 11pt; display: block; }
+    #print-view .pq ul { margin: 0; padding: 3mm 3.5mm 3mm 8mm; font-size: 12pt; }
+    #print-view .pq li { margin-bottom: 1.5mm; }
+    #print-view .foot { margin-top: 8mm; font-size: 10pt; color: #555; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="brand">
+    <svg viewBox="0 0 32 32" aria-hidden="true">
+      <rect width="32" height="32" rx="8" fill="#5B3DF5"/>
+      <path d="M18.5 4 8 18h7l-2 10 11-15h-7z" fill="#FFC933"/>
+    </svg>
+    Power Up
+    <small>SWOT personale</small>
+  </div>
+
+  <h1>La mia SWOT personale</h1>
+  <p class="intro">Costruisci la tua analisi in quattro riquadri: cosa ti aiuta e cosa ti frena dentro di te, cosa ti offre e cosa ti complica il contesto intorno a te. Alla fine la porti a casa come immagine o PDF.</p>
+  <p class="privacy">Quello che scrivi resta solo su questo dispositivo: non viene inviato né salvato altrove.</p>
+
+  <div class="name-row">
+    <label for="nome">Il tuo nome (facoltativo)</label>
+    <input id="nome" type="text" autocomplete="name" maxlength="60">
+  </div>
+
+  <div id="board"></div>
+
+  <section class="actions" aria-labelledby="take-home">
+    <h2 id="take-home">Portala a casa</h2>
+    <p>Quando hai finito, scegli come salvare la tua SWOT.</p>
+    <div class="btns">
+      <button class="btn" id="btn-img" type="button">Salva come immagine</button>
+      <button class="btn ghost" id="btn-print" type="button">Stampa o salva PDF</button>
+      <button class="btn ghost" id="btn-copy" type="button">Copia il testo</button>
+    </div>
+    <div class="reset"><button class="linkbtn" id="btn-reset" type="button">Cancella tutto e ricomincia</button></div>
+  </section>
+
+</div>
+
+<div id="print-view" aria-hidden="true"></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ---------- Contenuti dei quattro riquadri (modificabili) ---------- */
+const QUADS = {
+  S: { cls: "s", en: "Strengths", it: "Punti di forza", initial: "S", rest: "trengths",
+       esempio: "Es. Ascolto bene le persone e creo fiducia",
+       spunti: ["In cosa sei bravo, anche senza sforzo?", "Per cosa ti cercano colleghi e responsabili?", "Quale risultato recente ti rende orgoglioso?"] },
+  W: { cls: "w", en: "Weaknesses", it: "Punti deboli", initial: "W", rest: "eaknesses",
+       esempio: "Es. Faccio fatica a delegare",
+       spunti: ["Quale feedback ricevi più spesso su cosa migliorare?", "Cosa rimandi o eviti volentieri?", "Quale competenza ti manca per il prossimo passo?"] },
+  O: { cls: "o", en: "Opportunities", it: "Opportunità", initial: "O", rest: "pportunities",
+       esempio: "Es. Nuovi progetti di digitalizzazione nel mio ambito",
+       spunti: ["Quali cambiamenti in azienda o nel settore puoi sfruttare?", "Quali competenze stanno diventando richieste?", "Chi o cosa può aiutarti a crescere (mentori, corsi, progetti)?"] },
+  T: { cls: "t", en: "Threats", it: "Minacce", initial: "T", rest: "hreats",
+       esempio: "Es. Automazione di parte delle mie attività",
+       spunti: ["Quali cambiamenti potrebbero rendere meno utile ciò che sai fare?", "Quali vincoli (tempo, organizzazione, mercato) ti ostacolano?", "Cosa succede se non ti aggiorni nei prossimi due anni?"] }
+};
+const RIGHE = [
+  { titolo: "Risorse interne", chiavi: ["S", "W"] },
+  { titolo: "Contesto esterno", chiavi: ["O", "T"] }
+];
+
+/* ---------- Stato e salvataggio locale ---------- */
+const KEY = "powerup-swot-v1";
+let state = { nome: "", S: ["", ""], W: ["", ""], O: ["", ""], T: ["", ""] };
+try {
+  const raw = localStorage.getItem(KEY);
+  if (raw) {
+    const s = JSON.parse(raw);
+    if (s && typeof s === "object") {
+      state.nome = typeof s.nome === "string" ? s.nome : "";
+      ["S", "W", "O", "T"].forEach(k => {
+        if (Array.isArray(s[k]) && s[k].length) state[k] = s[k].map(String);
+      });
+    }
+  }
+} catch (e) { /* storage non disponibile: si lavora in memoria */ }
+
+let saveTimer = null;
+function salva() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => {
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+  }, 250);
+}
+
+const $ = (id) => document.getElementById(id);
+function toast(msg) {
+  const t = $("toast"); t.textContent = msg; t.classList.add("show");
+  clearTimeout(toast.h); toast.h = setTimeout(() => t.classList.remove("show"), 2600);
+}
+
+/* ---------- Costruzione della schermata ---------- */
+function autogrow(el) { el.style.height = "auto"; el.style.height = el.scrollHeight + 4 + "px"; }
+
+function disegnaQuad(k) {
+  const q = QUADS[k];
+  const sec = document.createElement("section");
+  sec.className = "quad " + q.cls;
+  sec.id = "quad-" + k;
+  sec.setAttribute("aria-labelledby", "h-" + k);
+
+  const head = document.createElement("header");
+  const h2 = document.createElement("h2");
+  h2.id = "h-" + k;
+  const en = document.createElement("span");
+  const em = document.createElement("em"); em.textContent = q.initial;
+  en.append(em, document.createTextNode(q.rest));
+  const it = document.createElement("span"); it.textContent = q.it;
+  h2.append(en, it); head.appendChild(h2); sec.appendChild(head);
+
+  const det = document.createElement("details");
+  const sum = document.createElement("summary"); sum.textContent = "Spunti per riflettere";
+  const ul = document.createElement("ul");
+  q.spunti.forEach(t => { const li = document.createElement("li"); li.textContent = t; ul.appendChild(li); });
+  det.append(sum, ul); sec.appendChild(det);
+
+  const list = document.createElement("ul"); list.className = "items"; list.id = "list-" + k;
+  sec.appendChild(list);
+
+  const add = document.createElement("button");
+  add.type = "button"; add.className = "add"; add.textContent = "+ Aggiungi una voce";
+  add.addEventListener("click", () => { state[k].push(""); righe(k); salva(); focusItem(k, state[k].length - 1); });
+  sec.appendChild(add);
+  return sec;
+}
+
+function righe(k) {
+  const list = $("list-" + k);
+  list.innerHTML = "";
+  state[k].forEach((val, i) => {
+    const li = document.createElement("li");
+    const ta = document.createElement("textarea");
+    ta.rows = 1; ta.value = val; ta.maxLength = 300;
+    ta.placeholder = i === 0 ? QUADS[k].esempio : "";
+    ta.setAttribute("aria-label", QUADS[k].it + ", voce " + (i + 1));
+    ta.addEventListener("input", () => { state[k][i] = ta.value; autogrow(ta); salva(); });
+    ta.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        state[k].splice(i + 1, 0, ""); righe(k); salva(); focusItem(k, i + 1);
+      } else if (e.key === "Backspace" && ta.value === "" && state[k].length > 1) {
+        e.preventDefault();
+        state[k].splice(i, 1); righe(k); salva(); focusItem(k, Math.max(0, i - 1));
+      }
+    });
+    li.appendChild(ta); list.appendChild(li);
+    autogrow(ta);
+  });
+}
+function focusItem(k, i) {
+  const t = $("list-" + k).querySelectorAll("textarea")[i];
+  if (t) t.focus();
+}
+
+function costruisci() {
+  const board = $("board"); board.innerHTML = "";
+  RIGHE.forEach(r => {
+    const band = document.createElement("div"); band.className = "band"; band.textContent = r.titolo;
+    const row = document.createElement("div"); row.className = "row";
+    r.chiavi.forEach(k => row.appendChild(disegnaQuad(k)));
+    board.append(band, row);
+  });
+  ["S", "W", "O", "T"].forEach(righe);
+  $("nome").value = state.nome;
+}
+
+$("nome").addEventListener("input", (e) => { state.nome = e.target.value; salva(); });
+
+/* ---------- Esportazione ---------- */
+function voci(k) { return state[k].map(s => s.trim()).filter(Boolean); }
+function titoloSwot() { return state.nome.trim() ? "La SWOT di " + state.nome.trim() : "La mia SWOT personale"; }
+
+/* Testo */
+function comeTesto() {
+  let out = titoloSwot() + "\n\n";
+  RIGHE.forEach(r => {
+    out += r.titolo + "\n";
+    r.chiavi.forEach(k => {
+      out += "\n" + QUADS[k].it + " (" + QUADS[k].en + ")\n";
+      const v = voci(k);
+      out += (v.length ? v.map(x => "- " + x).join("\n") : "(nessuna voce)") + "\n";
+    });
+    out += "\n";
+  });
+  return out.trim() + "\n";
+}
+$("btn-copy").addEventListener("click", async () => {
+  const txt = comeTesto();
+  try {
+    await navigator.clipboard.writeText(txt);
+    toast("Testo copiato negli appunti");
+  } catch (e) {
+    const ta = document.createElement("textarea");
+    ta.value = txt; ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.select();
+    let ok = false; try { ok = document.execCommand("copy"); } catch (_) {}
+    ta.remove();
+    toast(ok ? "Testo copiato negli appunti" : "Copia non riuscita: seleziona il testo a mano");
+  }
+});
+
+/* Stampa / PDF */
+function preparaStampa() {
+  const pv = $("print-view"); pv.innerHTML = "";
+  const h1 = document.createElement("h1"); h1.textContent = titoloSwot(); pv.appendChild(h1);
+  const who = document.createElement("p"); who.className = "who"; who.textContent = "Corso Power Up"; pv.appendChild(who);
+  RIGHE.forEach(r => {
+    const b = document.createElement("div"); b.className = "pband"; b.textContent = r.titolo; pv.appendChild(b);
+    const row = document.createElement("div"); row.className = "prow";
+    r.chiavi.forEach(k => {
+      const q = document.createElement("div"); q.className = "pq";
+      const h2 = document.createElement("h2");
+      h2.textContent = QUADS[k].en;
+      const sp = document.createElement("span"); sp.textContent = QUADS[k].it; h2.appendChild(sp);
+      const ul = document.createElement("ul");
+      voci(k).forEach(t => { const li = document.createElement("li"); li.textContent = t; ul.appendChild(li); });
+      q.append(h2, ul); row.appendChild(q);
+    });
+    pv.appendChild(row);
+  });
+}
+window.addEventListener("beforeprint", preparaStampa);
+$("btn-print").addEventListener("click", () => { preparaStampa(); window.print(); });
+
+/* Immagine PNG disegnata su canvas */
+function avvolgi(ctx, testo, maxW) {
+  const parole = testo.split(/\s+/); const righe = []; let cur = "";
+  parole.forEach(p => {
+    let w = p;
+    while (ctx.measureText(w).width > maxW) {           // parola più lunga della riga
+      let n = w.length; while (n > 1 && ctx.measureText(w.slice(0, n)).width > maxW) n--;
+      if (cur) { righe.push(cur); cur = ""; }
+      righe.push(w.slice(0, n)); w = w.slice(n);
+    }
+    const prova = cur ? cur + " " + w : w;
+    if (ctx.measureText(prova).width <= maxW) cur = prova; else { righe.push(cur); cur = w; }
+  });
+  if (cur) righe.push(cur);
+  return righe;
+}
+function rettangolo(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  if (ctx.roundRect) ctx.roundRect(x, y, w, h, r); else ctx.rect(x, y, w, h);
+}
+
+const COL = {
+  S: { fg: "#0F6B3C", bg: "#E4F6EC", ln: "#9FD8B8" },
+  W: { fg: "#B0283A", bg: "#FCE9EB", ln: "#F0A9B1" },
+  O: { fg: "#4429D1", bg: "#EEEAFF", ln: "#BFB2FA" },
+  T: { fg: "#8A5A00", bg: "#FFF2D1", ln: "#EBC96B" }
+};
+
+async function creaPng() {
+  try { await document.fonts.load('700 56px "Sora"'); await document.fonts.load('400 28px "Source Sans 3"'); } catch (e) {}
+  const DISPLAY = '"Sora", "Trebuchet MS", "Segoe UI", Arial, sans-serif';
+  const TEXT = '"Source Sans 3", "Segoe UI", Arial, sans-serif';
+  const W = 1600, P = 64, GAP = 28, colW = (W - 2 * P - GAP) / 2;
+  const HEAD = 96, LH = 38, IGAP = 12, PAD = 26, MINH = 380;
+  const m = document.createElement("canvas").getContext("2d");
+  m.font = "400 28px " + TEXT;
+
+  // misura il contenuto di ogni riquadro
+  const lay = {};
+  ["S", "W", "O", "T"].forEach(k => {
+    const items = voci(k).map(t => avvolgi(m, t, colW - 2 * PAD - 30));
+    let h = HEAD + PAD;
+    items.forEach(l => { h += l.length * LH + IGAP; });
+    h += PAD;
+    lay[k] = { items, h: Math.max(MINH, h) };
+  });
+  const rowH = RIGHE.map(r => Math.max(lay[r.chiavi[0]].h, lay[r.chiavi[1]].h));
+  const topH = 190, bandH = 56, footH = 90;
+  const H = topH + RIGHE.length * bandH + rowH[0] + rowH[1] + 2 * GAP + footH;
+
+  const c = document.createElement("canvas"); c.width = W; c.height = H;
+  const ctx = c.getContext("2d");
+  ctx.fillStyle = "#FFFFFF"; ctx.fillRect(0, 0, W, H);
+  ctx.textBaseline = "alphabetic";
+
+  // logo Power Up
+  ctx.fillStyle = "#5B3DF5"; rettangolo(ctx, P, 52, 44, 44, 11); ctx.fill();
+  ctx.fillStyle = "#FFC933"; ctx.beginPath();
+  ctx.moveTo(P + 25.8, 58); ctx.lineTo(P + 11, 78); ctx.lineTo(P + 21, 78); ctx.lineTo(P + 18, 92); ctx.lineTo(P + 33, 71); ctx.lineTo(P + 23, 71); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = "#161A3C"; ctx.font = "800 30px " + DISPLAY; ctx.fillText("Power Up", P + 58, 84);
+
+  ctx.font = "800 52px " + DISPLAY; ctx.fillStyle = "#161A3C";
+  ctx.fillText(titoloSwot(), P, 160);
+
+  let y = topH;
+  RIGHE.forEach((r, ri) => {
+    ctx.font = "700 26px " + DISPLAY; ctx.fillStyle = "#4B5078";
+    ctx.fillText(r.titolo, P, y + 34);
+    const bw = ctx.measureText(r.titolo).width;
+    ctx.fillStyle = "#D6DAEE"; ctx.fillRect(P + bw + 16, y + 26, W - 2 * P - bw - 16, 3);
+    y += bandH;
+    r.chiavi.forEach((k, ci) => {
+      const x = P + ci * (colW + GAP), h = rowH[ri], col = COL[k];
+      ctx.fillStyle = "#FFFFFF"; rettangolo(ctx, x, y, colW, h, 22); ctx.fill();
+      ctx.save(); rettangolo(ctx, x, y, colW, h, 22); ctx.clip();
+      ctx.fillStyle = col.bg; ctx.fillRect(x, y, colW, HEAD); ctx.restore();
+      ctx.strokeStyle = col.ln; ctx.lineWidth = 3; rettangolo(ctx, x + 1.5, y + 1.5, colW - 3, h - 3, 21); ctx.stroke();
+      ctx.fillStyle = col.fg; ctx.font = "800 30px " + DISPLAY; ctx.fillText(QUADS[k].en, x + PAD, y + 42);
+      ctx.font = "600 24px " + TEXT; ctx.fillText(QUADS[k].it, x + PAD, y + 78);
+      let ty = y + HEAD + PAD + 22;
+      ctx.font = "400 28px " + TEXT;
+      lay[k].items.forEach(lines => {
+        ctx.fillStyle = col.fg; ctx.beginPath(); ctx.arc(x + PAD + 6, ty - 9, 6, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = "#161A3C";
+        lines.forEach(l => { ctx.fillText(l, x + PAD + 30, ty); ty += LH; });
+        ty += IGAP;
+      });
+    });
+    y += rowH[ri] + GAP;
+  });
+  ctx.fillStyle = "#4B5078"; ctx.font = "400 22px " + TEXT;
+  ctx.fillText("Corso Power Up – SWOT personale", P, H - 40);
+  return c;
+}
+
+$("btn-img").addEventListener("click", async () => {
+  const btn = $("btn-img"); btn.disabled = true;
+  try {
+    const c = await creaPng();
+    const blob = await new Promise(res => c.toBlob(res, "image/png"));
+    const nomeFile = "SWOT_personale.png";
+    const file = new File([blob], nomeFile, { type: "image/png" });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try { await navigator.share({ files: [file], title: titoloSwot() }); return; }
+      catch (e) { if (e && e.name === "AbortError") return; }
+    }
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob); a.download = nomeFile;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+    toast("Immagine salvata nei download");
+  } catch (e) {
+    toast("Non sono riuscito a creare l’immagine: prova con “Stampa o salva PDF”");
+  } finally { btn.disabled = false; }
+});
+
+$("btn-reset").addEventListener("click", () => {
+  if (!confirm("Vuoi cancellare tutte le voci e ricominciare?")) return;
+  state = { nome: "", S: ["", ""], W: ["", ""], O: ["", ""], T: ["", ""] };
+  try { localStorage.removeItem(KEY); } catch (e) {}
+  costruisci(); window.scrollTo({ top: 0 });
+});
+
+costruisci();
+</script>
+</body>
+</html>
